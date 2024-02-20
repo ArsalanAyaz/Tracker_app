@@ -1,5 +1,6 @@
 "use client"
 import ExpenseForm from "@/components/ExpenseForm";
+import { ExpenseList } from "@/components/ExpenseList";
 import React , {useState} from "react";
 
 export type Expense ={
@@ -16,7 +17,15 @@ export default function Home() {
   const addExpense = (expense : Expense) => {
 
     setexpenses((prevExpenses) => [...prevExpenses , expense])
-    console.log(expenses)
+  
+  }
+
+  const deleteExpense = (id :number) => {
+
+    setexpenses((prevExpenses) => 
+      prevExpenses.filter((expense:Expense) => expense.id !== id)
+    )
+
   }
 
   return (
@@ -26,6 +35,9 @@ export default function Home() {
         EXPENSE TRACKER
       </h1>
       <ExpenseForm onAddExpense={addExpense}/>
+      {expenses.length ? (
+        <ExpenseList expenses={expenses} onDeleteExpense={deleteExpense} />
+      ): null}
     </div>
       
   );
